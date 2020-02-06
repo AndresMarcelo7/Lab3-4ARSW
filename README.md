@@ -1,6 +1,6 @@
 # Lab3ARSW
 
-#Integrantes
+# Integrantes
 
 - Johan Sebastían Arias
 - Andrés Felipe Marcelo
