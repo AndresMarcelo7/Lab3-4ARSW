@@ -17,11 +17,9 @@ public class Main {
     public static void main(String[] args) throws BlueprintPersistenceException, BlueprintNotFoundException {
         ApplicationContext ac = new ClassPathXmlApplicationContext("SpringContext.xml");
         BlueprintsServices bps = ac.getBean(BlueprintsServices.class);
-        Point[] ejemplo = {new Point(1,2), new Point(3,4)};
-        bps.addNewBlueprint(new Blueprint("Anfemaru","miblueprint",ejemplo ));
-        bps.addNewBlueprint(new Blueprint("Anfemaru","miblueprintdos",ejemplo ));
-        bps.addNewBlueprint(new Blueprint("Anfemaru","miblueprinttres",ejemplo ));
-        System.out.println(bps.getBlueprint("Anfemaru","miblueprint"));
+        Point[] ejemplo = {new Point(1,2),new Point(1,2),new Point(1,2), new Point(3,4)};
         System.out.println(bps.getBlueprintsByAuthor("Anfemaru"));
+        Blueprint rta = bps.filterBlueprint(new Blueprint("Anfemaru","miblueprint",ejemplo));
+        System.out.println(rta.getPoints());
     }
 }
