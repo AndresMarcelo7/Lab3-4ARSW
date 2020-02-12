@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -68,12 +70,59 @@ public class InMemoryPersistenceTest {
                 
         
     }
+    @Test
+    public void  getBluePrintTest() {
+        InMemoryBlueprintPersistence persistencia=new InMemoryBlueprintPersistence();
+        Blueprint bpTest = null;
+        Point[] puntos=new Point[]{new Point(0, 0),new Point(5, 5)};
+        Blueprint bp=new Blueprint("johan", "casaJohan",puntos);
+        try {
+            persistencia.saveBlueprint(bp);
+        } catch (BlueprintPersistenceException e) {
+            e.printStackTrace();
+        }
+        try {
+            bpTest = persistencia.getBlueprint("johan", "casaJohan");
+        } catch (BlueprintNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals(bpTest,bp);
+    }
 
     @Test
-    public void probando(){
+    public void getBlueprintsByAuthorTest(){
+        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
 
-    }
+        Point[] punto1=new Point[]{new Point(0, 0),new Point(1, 1)};
+        Blueprint bp1=new Blueprint("marcelo", "casitaMarcelo",punto1);
+        Point[] punto2=new Point[]{new Point(3, 3),new Point(5, 5)};
+        Blueprint bp2=new Blueprint("johan", "elRancho",punto2);
+        Point[] punto3=new Point[]{new Point(7, 7),new Point(10, 10)};
+        Blueprint bp3=new Blueprint("marcelo", "lasArias",punto3);
+        Point[] punto4=new Point[]{new Point(12, 12),new Point(16, 16)};
+        Blueprint bp4=new Blueprint("simon", "marrano",punto4);
+        Set<Blueprint> res= null;
+        try {
+            ibpp.saveBlueprint(bp1);
+            ibpp.saveBlueprint(bp2);
+            ibpp.saveBlueprint(bp3);
+            ibpp.saveBlueprint(bp4);
+        } catch (BlueprintPersistenceException e) {
+            e.printStackTrace();
+        }
+        Set<Blueprint> aux = new HashSet<>();
+        aux.add(bp1);
+        aux.add(bp3);
+
+        try {
+            res = ibpp.getBlueprintsByAuthor("marcelo");
+        } catch (BlueprintNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals(aux,res);
+
 
 
     
+    }
 }
