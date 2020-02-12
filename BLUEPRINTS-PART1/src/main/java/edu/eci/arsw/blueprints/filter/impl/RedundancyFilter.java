@@ -17,15 +17,11 @@ public class RedundancyFilter implements FilterBlueprints {
     @Override
     public Blueprint filterBlueprint(Blueprint bp) {
         ArrayList<Point> aux = new ArrayList<Point>();
+        Point flag = null;
         for (Point p : bp.getPoints()){
-            boolean flag = false;
-            for (Point a : aux){
-                if (p.equals(a)){
-                    flag = true;
-                }
-            }
-            if (!flag){
+            if (flag==null|| !p.equals(flag)){
                 aux.add(p);
+                flag=p;
             }
         }
         Point[] converted = toStaticList(aux);
@@ -39,4 +35,5 @@ public class RedundancyFilter implements FilterBlueprints {
         }
         return rta;
     }
+
 }

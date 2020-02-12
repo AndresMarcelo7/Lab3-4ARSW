@@ -41,6 +41,9 @@ public class Point {
     @Override
     public boolean equals (Object o){
         boolean equals;
+
+
+
         if(!o.getClass().getSimpleName().equals("Point")){
             equals = false;
         }
