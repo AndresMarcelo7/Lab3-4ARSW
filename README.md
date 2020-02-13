@@ -5,4 +5,5 @@
 - Johan Sebastían Arias
 - Andrés Felipe Marcelo
 - Simon Marín Mejía.
+- Juan Carlos Garia
 
