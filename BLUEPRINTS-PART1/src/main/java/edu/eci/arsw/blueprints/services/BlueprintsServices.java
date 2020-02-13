@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  *
  * @author hcadavid
  */
-@Service()
+@Service("servicios")
 
 public class BlueprintsServices {
     @Autowired
