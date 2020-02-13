@@ -10,17 +10,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.services.BlueprintsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -61,4 +60,18 @@ public class BlueprintAPIController {
             return new ResponseEntity<>("No existe este Blueprint !",HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> manejadorPostBlueprint(@RequestBody Blueprint o){
+        try {
+            bps.addNewBlueprint(o);
+            return new ResponseEntity<>("Tu registro fue exitoso",HttpStatus.CREATED);
+        } catch (BlueprintPersistenceException ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla",HttpStatus.FORBIDDEN);
+        }
+        //curl -i -X POST -HContent-Type:application/json -HAccept:application/json http://localhost:8080 -d '{"author":"Pepe","points":[{"x":140,"y":140},{"x":115,"y":115}],"name":"P1"}'
+    }
+
+
 }
