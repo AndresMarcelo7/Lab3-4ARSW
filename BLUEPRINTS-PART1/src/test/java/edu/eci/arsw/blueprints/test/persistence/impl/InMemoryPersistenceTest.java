@@ -91,7 +91,7 @@ public class InMemoryPersistenceTest {
 
     @Test
     public void getBlueprintsByAuthorTest(){
-        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
+        InMemoryBlueprintPersistence persistencia=new InMemoryBlueprintPersistence();
 
         Point[] punto1=new Point[]{new Point(0, 0),new Point(1, 1)};
         Blueprint bp1=new Blueprint("marcelo", "casitaMarcelo",punto1);
@@ -101,12 +101,12 @@ public class InMemoryPersistenceTest {
         Blueprint bp3=new Blueprint("marcelo", "lasArias",punto3);
         Point[] punto4=new Point[]{new Point(12, 12),new Point(16, 16)};
         Blueprint bp4=new Blueprint("simon", "marrano",punto4);
-        Set<Blueprint> res= null;
+        Set<Blueprint> ans= null;
         try {
-            ibpp.saveBlueprint(bp1);
-            ibpp.saveBlueprint(bp2);
-            ibpp.saveBlueprint(bp3);
-            ibpp.saveBlueprint(bp4);
+            persistencia.saveBlueprint(bp1);
+            persistencia.saveBlueprint(bp2);
+            persistencia.saveBlueprint(bp3);
+            persistencia.saveBlueprint(bp4);
         } catch (BlueprintPersistenceException e) {
             e.printStackTrace();
         }
@@ -115,11 +115,11 @@ public class InMemoryPersistenceTest {
         aux.add(bp3);
 
         try {
-            res = ibpp.getBlueprintsByAuthor("marcelo");
+            ans = persistencia.getBlueprintsByAuthor("marcelo");
         } catch (BlueprintNotFoundException e) {
             e.printStackTrace();
         }
-        assertEquals(aux,res);
+        assertEquals(aux,ans);
 
 
 
