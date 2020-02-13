@@ -31,9 +31,12 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     public InMemoryBlueprintPersistence() {
         //load stub data
         Point[] pts=new Point[]{new Point(140, 140),new Point(115, 115)};
-        Blueprint bp=new Blueprint("_authorname_", "_bpname_ ",pts);
+        Blueprint bp=new Blueprint("Pepe", "P1",pts);
+        Blueprint bp2=new Blueprint("Pepe", "P2",pts);
+        Blueprint bp3=new Blueprint("Juan", "P3",pts);
         blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
-        
+        blueprints.put(new Tuple<>(bp2.getAuthor(),bp2.getName()), bp2);
+        blueprints.put(new Tuple<>(bp3.getAuthor(),bp3.getName()), bp3);
     }    
     //Si se daña un pixel significa que circuito generador de matrices dejo de funcionar
     @Override
@@ -48,7 +51,12 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
     @Override
     public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
-        return blueprints.get(new Tuple<>(author, bprintname));
+        Blueprint bp = blueprints.get(new Tuple<>(author, bprintname));
+
+        if (bp == null){
+            throw new BlueprintNotFoundException("No existe este Blueprint");
+        }
+        return bp;
     }
 
     @Override
@@ -59,7 +67,18 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
                 bpsrta.add(blueprints.get(bps));
             }
         }
+        if (bpsrta.isEmpty()){
+            throw new BlueprintNotFoundException("No existe este autor");
+        }
         return bpsrta;
+    }
+
+    @Override
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException {
+        if (blueprints.isEmpty()){
+            throw new BlueprintNotFoundException("No Hay Datos");
+        }
+        return new HashSet<Blueprint>(blueprints.values());
     }
 
 

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  *
  * @author hcadavid
  */
-@Service("servicios")
+@Service("bpServices")
 
 public class BlueprintsServices {
     @Autowired
@@ -37,8 +37,10 @@ public class BlueprintsServices {
         bpp.saveBlueprint(bp);
     }
     
-    public Set<Blueprint> getAllBlueprints(){
-        return null;
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException {
+
+        return bpp.getAllBlueprints();
+
     }
     
     /**
