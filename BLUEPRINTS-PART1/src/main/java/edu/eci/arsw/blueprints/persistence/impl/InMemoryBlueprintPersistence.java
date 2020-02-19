@@ -13,10 +13,7 @@ import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -79,6 +76,16 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
             throw new BlueprintNotFoundException("No Hay Datos");
         }
         return new HashSet<Blueprint>(blueprints.values());
+    }
+
+    @Override
+    public void updateBlueprint(Blueprint bp, String author, String name) throws BlueprintNotFoundException {
+        if (bp == null){
+            throw new BlueprintNotFoundException("No existe este Blueprint");
+        }
+        Blueprint old = getBlueprint(author,name);
+        old.setPoints(bp.getPoints());
+
     }
 
 

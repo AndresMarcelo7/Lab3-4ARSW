@@ -68,5 +68,9 @@ public class BlueprintsServices {
     public Blueprint filterBlueprint(Blueprint bp){
         return filterTool.filterBlueprint(bp);
     }
+
+    public void updateBlueprint(Blueprint bp,String author,String name) throws BlueprintNotFoundException {
+        bpp.updateBlueprint(bp,author,name);
+    }
     
 }

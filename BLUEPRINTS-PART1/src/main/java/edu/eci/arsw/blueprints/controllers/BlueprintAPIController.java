@@ -11,9 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.services.BlueprintsServices;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -68,10 +70,20 @@ public class BlueprintAPIController {
             return new ResponseEntity<>("Tu registro fue exitoso",HttpStatus.CREATED);
         } catch (BlueprintPersistenceException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("Error bla bla bla",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.FORBIDDEN);
         }
         //curl -i -X POST -HContent-Type:application/json -HAccept:application/json http://localhost:8080 -d '{"author":"Pepe","points":[{"x":140,"y":140},{"x":115,"y":115}],"name":"P1"}'
     }
 
-
+    @RequestMapping(method = RequestMethod.PUT, value = "/{author}/{name}")
+    public ResponseEntity<?> manejadorPutBlueprint(@PathVariable String author, @PathVariable String name, @RequestBody Blueprint bp){
+        try {
+            bps.updateBlueprint(bp, author, name);
+            return new ResponseEntity<>("Actualizacion exitosa",HttpStatus.CREATED);
+        }
+        catch(BlueprintNotFoundException ex){
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.FORBIDDEN);
+        }
+    }
 }
