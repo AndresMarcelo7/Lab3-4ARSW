@@ -15,7 +15,13 @@ debido a que puede darse el caso de que mientras alguien está actualizando el a
 
 What are the respective critical regions? 
 
-![capture](img/Captur.png)
+![capture](img/Captur.PNG)
 
 Lo solucionamos mediante la implementación ConcurrentHashMap en la región critica.  
+
+Para correr el programa:
+
+- mvn compile
+- mvn spring-boot:run
+
 
