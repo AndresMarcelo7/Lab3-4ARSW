@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -23,7 +24,7 @@ import java.util.*;
 @Qualifier("inMemoryPersistence")
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
-    private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
+    private final ConcurrentHashMap<Tuple<String,String>,Blueprint> blueprints=new ConcurrentHashMap<>();
 
     public InMemoryBlueprintPersistence() {
         //load stub data
@@ -42,7 +43,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
             throw new BlueprintPersistenceException("The given blueprint already exists: "+bp);
         }
         else{
-            blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
+            blueprints.putIfAbsent(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         }        
     }
 
